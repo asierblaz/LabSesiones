@@ -1,3 +1,12 @@
+<?php 
+session_start();
+if( $_SESSION["tipouser"]== null || $_SESSION["tipouser"]!="admin"){
+	echo "<html> <h1>Solo los administradores pueden acceder a esta pagina.<h1><html>";
+	die();
+}
+ ?>
+
+
  <!DOCTYPE html>
 <html>
   <head>
@@ -42,33 +51,13 @@ echo $imprimir['imagen'];
 <?php
 				
 				echo"
-				<span><a href='layout.php?mail=$email'>Inicio</a></spam>";
+				<span><a href='layoutadmin.php?mail=$email'>Inicio</a></spam>";
 				?>
 			<?php
-				
 				echo"
-				<span><a href='preguntas.php?mail=$email'>Insertar Pregunta</a></spam>";
+				<span><a href='GestionarCuentas.php?mail=$email'>Gestionar Cuentas</a></spam>";
 				?>
-				<?php
-				
-				echo"
-				<span><a href='VerPreguntasConFoto.php?mail=$email'>Ver Preguntas</a></spam>";
-				?>
-				<?php
-				
-				echo"
-				<span><a href='VerPreguntasXML.php?mail=$email'>Ver Preguntas XML</a></spam>";
-				?>
-			<?php
-				
-				echo"
-				<span><a href='GestionPreguntas.php?mail=$email'>Gestionar Preguntas</a></spam>";
-				?>
-			<?php
-				
-				echo"
-				<span><a href='ObtenerPregunta.php?mail=$email'>ObtenerPregunta</a></spam>";
-				?>
+		
 <?php
 				
 				echo"

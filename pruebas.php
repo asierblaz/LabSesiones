@@ -1,28 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-	<?php 
-include "ParametrosBD.php";
-
-		$email= $_GET['mail'];
- $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos);
-$sql= "SELECT imagen,nombre FROM usuarios WHERE email='$email'";
-$resultado= mysqli_query($conexion,$sql);
-
-while($imprimir=mysqli_fetch_array($resultado)){
-
-echo $imprimir['nombre'];
-?> &nbsp;&nbsp;
-
-<?php
-echo $imprimir['imagen'];
-}
-?>
-
-
-</style>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Inicio</title>
+	<title>Preguntas</title>
     <link rel='stylesheet' type='text/css' href='estilos/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -32,142 +12,127 @@ echo $imprimir['imagen'];
 		   type='text/css' 
 		   media='only screen and (max-width: 480px)'
 		   href='estilos/smartphone.css' />
+
+
+	<style type="text/css">
+		
+		.entrada{
+			width: 500px;
+		}
+		#complejidad{
+			width: 50px;
+		}
+	</style>		   
   </head>
   <body>
   <div id='page-wrap'>
 	<header class='main' id='h1'>
 		<span class="right"><a href="registrarse.php">Registrarse</a></span>
       		<span class="right"><a href="login.php">Login</a></span>
+      		<span class="right" style="display:none;"><a href="/logout">Logout</a></span>
 		<h2>Quiz: el juego de las preguntas</h2>
     </header>
-<nav class='main' id='n1' role='navigation'>
-	
-<?php
-				
-				echo"
-				<span><a href='layout.php?mail=$email'>Inicio</a></spam>";
-				?>
-			<?php
-				
-				echo"
-				<span><a href='preguntas.php?mail=$email'>Insertar Pregunta</a></spam>";
-				?>
-				<?php
-				
-				echo"
-				<span><a href='VerPreguntasConFoto.php?mail=$email'>Ver Preguntas</a></spam>";
-				?>
-				<?php
-				
-				echo"
-				<span><a href='VerPreguntasXML.php?mail=$email'>Ver Preguntas XML</a></spam>";
-				?>
-			<?php
-				
-				echo"
-				<span><a href='GestionPreguntas.php?mail=$email'>Gestionar Preguntas</a></spam>";
-				?>
-			<?php
-				
-				echo"
-				<span><a href='ObtenerPregunta.php?mail=$email'>ObtenerPregunta</a></spam>";
-				?>
-<?php
-				
-				echo"
-				<span><a href='creditos.php?mail=$email'>Creditos</a></spam>";
-				?>
-				
-			
-			
+	<nav class='main' id='n1' role='navigation'>
+		<span><a href='layout.html'>Inicio</a></spam>
+		<span><a href='creditos.html'>Creditos</a></spam>
 	</nav>
+
+
     <section class="main" id="s1">
-    
+
 	<div>
+ <div style="text-align:left;"><strong>Entrar al Sistema</strong> </div> <br>
+	<fieldset>
 
-	<h3>Estas son los usuarios almacenados en la base de datos</h3>
-
-<br>
-<center>
-
-<table border="1"style="background-color: white; text-align: center;">
-	<tr>
-		<td><strong>EMAIL</strong></td>	
-		<td><strong>Nombre y Apellido</strong></td>	
-		<td><strong>Password</strong></td>
-		<td><strong>Imagen</strong></td>
-		<td><strong>Estado</strong></td>	
-		<td><strong>Accion</strong></td>
-		<td><strong>Eliminar</strong></td>
-
-	</tr>
-<?php 
-$sql= "SELECT * FROM usuarios";
-$resultado= mysqli_query($conexion,$sql);
-
-while($imprimir=mysqli_fetch_array($resultado)){
- ?>
-<tr>
-	<td><br>&nbsp;&nbsp;<?php echo $imprimir['email'] ?>&nbsp;&nbsp;<br></td>
-	<td>&nbsp;&nbsp;<?php echo $imprimir['nombre']?>&nbsp;&nbsp;</td>
-	<td>&nbsp;&nbsp;<?php echo $imprimir['password']?>&nbsp;&nbsp;</td>
-	<td>&nbsp;&nbsp;<?php echo $imprimir['imagen']?>&nbsp;&nbsp;</td>
-	<td>&nbsp;&nbsp;<?php echo $imprimir['estado']?>&nbsp;&nbsp;</td>
-	<td>&nbsp;&nbsp;<input type="button" id="bloquear" value="Bloquear">&nbsp;&nbsp;</td>
-	<td>&nbsp;&nbsp;<input type="button" id="eliminar" value="Eliminar">&nbsp;&nbsp;</td>
+<form id="login" name="login" method="POST" enctype="multipart/form-data" action="pruebas.php" style="background-color: white; text-align: left;">
+	Email*:<input type="text" name="email" id="email" class="entrada" autofocus required placeholder="Introduzca su email" ><br>
+	Contraseña*: <input type="password" name="password" id="password"class="entrada"required placeholder="Introduzca su Contraseña"><br>
+	<br>
+	<label id="et">¿No tienes cuenta? </label><a href="registrarse.php">  Regístrate</a><br>
+	
+	<br>
+	
+<center> <input type="submit" id="enviar" value="Entrar"></center> 
+</form>   </fieldset>
+<style type="text/css">
+	#error{
+		
+		color: #FF0000;
 
 		
-</tr>
+	}
+</style>
+
+
+<?php
+
+if (isset($_POST['email'])){
+//conectar a la base de datos
+include "ParametrosBD.php";
+
+
+$conexion=mysqli_connect($servidor,$usuario,$password,$basededatos) or die
+	("No se ha podido conectar con el servidor de Base de datos");;
+
+
+	$emailingresado= $_POST['email'];
+	$passwordingresado=$_POST['password'];
+$consulta= "SELECT * FROM usuarios WHERE email='$emailingresado' and password='$passwordingresado'";
+			
+
+$resultado=mysqli_query($conexion,$consulta);
 
 
 
- <?php  
-}
+$fila= mysqli_num_rows($resultado);
 
-?>
+if($fila>0)
+{
+	if($emailingresado=="admin000@ehu.es" && $passwordingresado=="admin000"){
+		session_start();
+		$_SESSION["tipouser"]="admin";
+		$_SESSION["mail"]= $emailingresado;
+		 echo "<script>alert('Bienvenido a la administracion del sistema sistema ".$emailingresado."');</script>";
+		     echo "<script language=Javascript> location.href=\"layoutadmin.php?mail=$emailingresado \"; </script>";
 
-
-
-</table>
-
-
-</center>
-
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-
-
-<script>
-
-	//eliminar usuario-----
-
-	$("#eliminar").click(function() {
-
-		var email= $imprimir['email'];
-		 confirm("¿Quiere eliminar a "+emial+"?");
-
-
-
-			});
+	}
+	else{
+		session_start();
+		$_SESSION["tipouser"]="alumno";
+		$_SESSION["mail"]= $emailingresado;
 	
+    echo "<script>alert('Bienvenido al sistema ".$emailingresado."');</script>";
+    //header("Location: layout.php?mail=$emailingresado");
+
+    $xml = simplexml_load_file("contador.xml");
+										$xml->value=$xml->value+1;
+										$xml->asXML('contador.xml');
+    echo "<script language=Javascript> location.href=\"layout.php?mail=$emailingresado \"; </script>";
+	}
+}else{
+echo '<html><br><div id=error class="error">Los datos de acceso no coinciden.</div></hmtl>';
+
+}}
+ ?>
 
 
-
-
-
-	
-	$("#logout").click(function() {
-		alert("Gracias por jugar a quiz.");
-		$(location).attr('href', 'logout.php');
-	});
-	
-	
-</script>
 	</div>
+
+	
+
     </section>
-	<footer class='main' id='f1'>
+		<footer class='main' id='f1'>
 		<a href='https://github.com/asierblaz/LabAJAX'>Link GITHUB</a>
 	</footer>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+
+			
+			
+
+
+
+
 </body>
 </html>

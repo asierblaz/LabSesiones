@@ -1,3 +1,10 @@
+<?php 
+session_start();
+if( $_SESSION["tipouser"]== null || $_SESSION["tipouser"]!="alumno"){
+	echo "<html> <h1>Solo los alumnos pueden acceder a esta pagina.<h1><html>";
+	die();
+}
+ ?>
  <!DOCTYPE html>
 <html>
   <head>

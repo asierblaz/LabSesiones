@@ -88,6 +88,19 @@ $fila= mysqli_num_rows($resultado);
 
 if($fila>0)
 {
+	if($emailingresado=="admin000@ehu.es" && $passwordingresado=="admin000"){
+		session_start();
+		$_SESSION["tipouser"]="admin";
+		$_SESSION["mail"]= $emailingresado;
+		 echo "<script>alert('Bienvenido a la administracion del sistema sistema ".$emailingresado."');</script>";
+		     echo "<script language=Javascript> location.href=\"layoutadmin.php?mail=$emailingresado \"; </script>";
+
+	}
+	else{
+		session_start();
+		$_SESSION["tipouser"]="alumno";
+		$_SESSION["mail"]= $emailingresado;
+	
     echo "<script>alert('Bienvenido al sistema ".$emailingresado."');</script>";
     //header("Location: layout.php?mail=$emailingresado");
 
@@ -95,7 +108,7 @@ if($fila>0)
 										$xml->value=$xml->value+1;
 										$xml->asXML('contador.xml');
     echo "<script language=Javascript> location.href=\"layout.php?mail=$emailingresado \"; </script>";
-
+	}
 }else{
 echo '<html><br><div id=error class="error">Los datos de acceso no coinciden.</div></hmtl>';
 
