@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
-	<title>Inicio</title>
+	<title>Preguntas</title>
     <link rel='stylesheet' type='text/css' href='estilos/style.css' />
 	<link rel='stylesheet' 
 		   type='text/css' 
@@ -13,7 +13,7 @@
 		   media='only screen and (max-width: 480px)'
 		   href='estilos/smartphone.css' />
   </head>
-  <body>
+  <body onload="mapa();">
   <div id='page-wrap'>
 	<header class='main' id='h1'>
       		<span class="right"><input type="button" id="logout" name="logout" value="Logout"></span>
@@ -60,25 +60,62 @@ echo $imprimir['imagen'];
 	</nav>
     <section class="main" id="s1">
     
-	<div>
-<h2>Bienvenido a quiz
-</h2>
-<img src="img/quiz.jpg" >
+    <h3> Creditos</h3>
+    <br>
+    Esta es tu localización
+	<!-- LOCALIZACION -->
+	<div id="mapa">
+		
 
 	</div>
-    </section>
-		<footer class='main' id='f1'>
-		<a href='https://github.com/asierblaz/'>Link GITHUB</a>
-	</footer>
+	<div>
+		Los autores de esta página son Asier Blázquez y Issur Sánchez, estudiantes de Grado en Ingenieria Informatica en la Facultad de San Sebastian UPV/EHU. <br><br>
+					<img src="img/Usuario-Icono.jpg" alt="Asier Blázquez" width="200">
+					<img src="img/Usuario-Icono.jpg" alt="Issur Sanchez" width="200">
+
+	</div></div>
+
 
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2feMVfId4Z_N298RcaKtl7DnBgkzleLE"></script>
+	<script>
+		function mapa(){
+			var div= $("#mapa");
+
+			function localizacion(posicion){
+
+				var latitud = posicion.coords.latitude;
+
+				var longitud = posicion.coords.longitude;
+				div.html("Longitud= "+longitud+"<br> Latitud= "+latitud+".");
+
+		 var mapa = "https://maps.googleapis.com/maps/api/staticmap?center="+latitud+","+longitud+"&size=600x300&markers=color:red%7C"+latitud+","+longitud+"&key=AIzaSyA2feMVfId4Z_N298RcaKtl7DnBgkzleLE";
+			div.html("<img src='"+mapa+"'>");
+
+
+				
+			}
+			function error(){
+				div.html( "<p>No se pudo obtener tu ubicación</p>");
+			}
+			navigator.geolocation.getCurrentPosition(localizacion,error);
+		}
+	</script>
+
+
+	  </section>
+	<footer class='main' id='f1'>
+		<a href='https://github.com/asierblaz/LabAJAX'>Link GITHUB</a>
+	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
 <script>
 	$("#logout").click(function() {
 		alert("Gracias por jugar a quiz.");
 		$(location).attr('href', 'logout.php');
 	});
-	
 	
 </script>
 </div>

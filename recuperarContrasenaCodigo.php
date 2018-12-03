@@ -41,16 +41,12 @@
     <section class="main" id="s1">
 
 	<div>
- <div style="text-align:left;"><strong>Entrar al Sistema</strong> </div> <br>
+ <div style="text-align:left;"><strong>Recuperar Contraseña</strong> </div> <br>
 	<fieldset>
 
 <form id="login" name="login" method="POST" enctype="multipart/form-data" action="login.php" style="background-color: white; text-align: left;">
-	Email*:<input type="text" name="email" id="email" class="entrada" autofocus required placeholder="Introduzca su email" ><br>
-	Contraseña*: <input type="password" name="password" id="password"class="entrada"required placeholder="Introduzca su Contraseña"><br>
+	Introduce el email de recuperación*:<input type="text" name="email" id="email" class="entrada" autofocus required placeholder="Introduzca su email" ><br>
 	<br>
-	<label id="et">¿No tienes cuenta? </label><a href="registrarse.php">  Regístrate</a><br>
-	<label id="et">He olvidado mi contraseña </label><a href="recuperarContrasena.php"> Recuperar</a><br>
-
 	
 	<br>
 	
@@ -78,46 +74,38 @@ $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos) or die
 
 
 	$emailingresado= $_POST['email'];
-	$passwordingresado=$_POST['password'];
 
 //$consulta= "SELECT * FROM usuarios WHERE email='$emailingresado' and password='$passwordingresado'";
-$consulta= "SELECT password FROM usuarios WHERE email='$emailingresado'";
+$consulta= "SELECT * FROM usuarios WHERE email='$emailingresado'";
 			
 
 $resultado=mysqli_query($conexion,$consulta);
 
-$imprimir= mysqli_fetch_array($resultado);
+$fila= mysqli_num_rows($resultado);
+
+if($fila>0){
+
+//email destinatario
+$emailpara= $emailingresado;
+
+$asunto= "Recuperación de Contraseña.";
+
+$codigo= rand(10000,99999);
 
 
-if(password_verify($passwordingresado,$imprimir['password'])==true)
-{
-	if($emailingresado=="admin000@ehu.es"){
-		session_start();
-		$_SESSION["tipouser"]="admin";
-		$_SESSION["mail"]= $emailingresado;
-		 echo "<script>alert('Bienvenido a la administracion del sistema sistema ".$emailingresado."');</script>";
-		     echo "<script language=Javascript> location.href=\"layoutadmin.php?mail=$emailingresado \"; </script>";
+//variables de sesion
 
-	}
-	else{
-		session_start();
-		$_SESSION["tipouser"]="alumno";
-		$_SESSION["mail"]= $emailingresado;
-	
-    echo "<script>alert('Bienvenido al sistema ".$emailingresado."');</script>";
-    //header("Location: layout.php?mail=$emailingresado");
+session_start();
+$_SESSION['codigo']=$codigo;
+$_SESSION['email']=$emailpara;
 
-    $xml = simplexml_load_file("contador.xml");
-										$xml->value=$xml->value+1;
-										$xml->asXML('contador.xml');
-    echo "<script language=Javascript> location.href=\"layout.php?mail=$emailingresado \"; </script>";
-	}
-}else{
-echo '<html><br><div id=error class="error">Los datos de acceso no coinciden.</div></hmtl>';
+$mensaje=" <html> <a </html>"
 
-}}
+}
+
+
  ?>
-
+ <a href="">
 
 	</div>
 

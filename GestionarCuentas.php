@@ -61,7 +61,7 @@ echo $imprimir['imagen'];
 <?php
 				
 				echo"
-				<span><a href='creditos.php?mail=$email'>Creditos</a></spam>";
+				<span><a href='creditosadmin.php?mail=$email'>Creditos</a></spam>";
 				?>
 				
 			

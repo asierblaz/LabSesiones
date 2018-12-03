@@ -83,6 +83,8 @@ include "ParametrosBD.php";
 	$dir=$dir."/".$imagen;
 	move_uploaded_file($archivo, $dir);
 
+	
+
 
 ?>
 
@@ -90,8 +92,10 @@ include "ParametrosBD.php";
 <?php  
 
 	//sentencia sql
+
+$passwordEncriptada= password_hash($password, PASSWORD_DEFAULT);
 	
-	$sql="INSERT INTO usuarios VALUES ('$email','$nombre','$password','<img  width=100px src=".$dir.">','$estado')";
+	$sql="INSERT INTO usuarios VALUES ('$email','$nombre','$passwordEncriptada','<img  width=100px src=".$dir.">','$estado')";
 
 
 
