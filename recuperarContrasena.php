@@ -1,3 +1,5 @@
+<?php 
+session_start(); ?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -95,7 +97,6 @@ $codigo= rand(10000,99999);
 
 //variables de sesion
 
-session_start();
 $_SESSION['codigo']=$codigo;
 $_SESSION['email']=$emailingresado;
 

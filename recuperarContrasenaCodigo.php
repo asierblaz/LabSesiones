@@ -1,4 +1,7 @@
+<?php 
+session_start();
 
+ ?>
 <?php 
 $email = $_GET['mail'];
  ?>
@@ -83,7 +86,7 @@ include "ParametrosBD.php";
 	$dir=$dir."/".$imagen;
 	move_uploaded_file($archivo, $dir);
 
-	
+
 if($_SESSION['email']==$email && $_SESSION['codigo']==$codigo ){
 
 
@@ -104,14 +107,14 @@ $passwordEncriptada= password_hash($password, PASSWORD_DEFAULT);
 						echo '<script type="text/javascript">alert("Ha ocurrido un error, puede que los datos no sean correctos");</script>';
 
 	 }else{ 
-	 echo"Registro realizado correctamente <br><a href='login.php'>¿Quieres iniciar sesion? </a>";
+	 echo"Contraseña cambiada correctamente <br><a href='login.php'>¿Quieres iniciar sesion? </a>";
 
 
 	 } 
 	 
 	 }
-else{ echo $_SESSION['codigo']; echo $_SESSION['email'];
-
+else{ 
+	echo "El codigo o el email son incorrectos";
 	} 
 
 }
