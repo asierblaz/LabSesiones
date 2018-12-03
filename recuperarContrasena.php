@@ -99,8 +99,7 @@ session_start();
 $_SESSION['codigo']=$codigo;
 $_SESSION['email']=$emailingresado;
 
-$mensaje=" <html>  <a href='http://localhost/LabSesiones/recuperarContrasenaCodigo.php?mail=".$emailingresado."'>
-
+$mensaje=" <html>Para recuperar su contraseña,haga click en el codigo y añadalo al formulario <br>  <a href='https://ws18g20.000webhostapp.com/LabSesiones/recuperarContrasenaCodigo.php?mail=".$emailingresado."'>
 <h1>".$codigo."</h1>
  </html>";
 
@@ -111,15 +110,15 @@ $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 // Cabeceras adicionales
 $cabeceras .= 'To: Usuario <'.$emailpara.'>' . "\r\n";
 $cabeceras .= 'From: Recuperar Password <admin000@ehu.es>' . "\r\n";
-$cabeceras .= 'Cc: birthdayarchive@example.com' . "\r\n";
-$cabeceras .= 'Bcc: birthdaycheck@example.com' . "\r\n";
+$cabeceras .= 'Cc: admin000@ehu.es' . "\r\n";
+$cabeceras .= 'Bcc: admin000@ehu.es' . "\r\n";
 
 
 
 //ENVIAMOS EL EMAIL
 mail($emailpara, $asunto, $mensaje, $cabeceras);
 
-echo "El email se ha enviado correctamente";
+echo "El email se ha enviado correctamente, recibirá un código de verificación";
 }else{
 echo '<html><br><div id=error class="error">El email introducido no existe.</div></hmtl>';
 }

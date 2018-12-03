@@ -10,7 +10,7 @@ $clave=$_GET['clave'];
 if (isset($clave)){
 
 
-$soapclient = new nusoap_client ( 'http://localhost/LabServiciosWeb/ObtenerPreguntaSW.php?wsdl',true);
+$soapclient = new nusoap_client ( 'https://ws18g20.000webhostapp.com/LabSesiones/ObtenerPreguntaSW.php?wsdl',true);
 //Llamamos la función que habíamos implementado en el Web Service.
 //e imprimimos lo que nos devuelve
 $result = $soapclient->call('ObtenerPregunta', array("$clave"=>$clave));
