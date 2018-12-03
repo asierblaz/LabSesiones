@@ -49,13 +49,13 @@ $email = $_GET['mail'];
 	<fieldset>
 
 <form id="registro" name="registro" method="POST" enctype="multipart/form-data" action="recuperarContrasenaCodigo.php" style="background-color: white; text-align: left;">
-	Email*:<input type="text" name="email" id="email" class="entrada" value="<?php echo $email; ?>" required pattern="[a-z]{3,200}[0-9]{3}@ikasle.ehu+\.eus$"><label id="emailvip"></label><br> 
+	Email*:<input type="text" name="email" id="email" class="entrada" value="<?php echo $email; ?>"><label id="emailvip"></label><br> 
 	Código*: <input type="number" name="codigo" id="codigo" class="entrada"required><br>
 	Contraseña*: <input type="password" name="password" minlength="8"id="password" class="entrada"required><label id="contraseñatop"></label><br>
 	Repita su contraseña: <input type="password" name="repassword" minlength="8" id="repassword" class="entrada"required><br>
 	
 	
-<center> <input type="submit" id="enviar" value="Registrarse"></center> 
+<center> <input type="submit" id="enviar" value="Cambiar Contraseña"></center> 
 </form>   </fieldset>
 
 
@@ -83,7 +83,7 @@ include "ParametrosBD.php";
 	$dir=$dir."/".$imagen;
 	move_uploaded_file($archivo, $dir);
 
-	session_start();
+	
 if($_SESSION['email']==$email && $_SESSION['codigo']==$codigo ){
 
 
@@ -92,7 +92,6 @@ $passwordEncriptada= password_hash($password, PASSWORD_DEFAULT);
 	
 	$sql="UPDATE usuarios SET password='$passwordEncriptada' WHERE email='$email'";
 
-	session_destroy();
 
 
 
@@ -111,7 +110,8 @@ $passwordEncriptada= password_hash($password, PASSWORD_DEFAULT);
 	 } 
 	 
 	 }
-else{ echo "Ha ocurrido un error";
+else{ echo $_SESSION['codigo']; echo $_SESSION['email'];
+
 	} 
 
 }
@@ -181,40 +181,6 @@ $('#contraseñatop').fadeIn().html(' <p style="color:red;">La contraseña es INV
 
 
 //---------------------------email-----------------------------------------
-	var vip= false;
-
-		function EmailVip(){
-		var email = document.getElementById("email").value;
-		$.ajax({
-		url: 'EmailVip.php?mail='+email+'',
-
-	success:function(datos){
-	if	(datos==1){
-
-$('#emailvip').fadeIn().html(' <p style="color:green;">El email es vip</p> ');	
-	vip=true;
-}
- else {
-$('#emailvip').fadeIn().html(' <p style="color:red;">El email no es vip</p> ');	
-	vip= false
-	}
-
-
-		}
-			});
-		}
-
-
-
-
-$("#email").blur(function(){ //con blur detecta cuando el usuario ha dejado de escribir
-EmailVip();
-});
-$("#email").keyup(function(){ //con keyup detecta cuando el usuario toca el teclado en ese campo
-EmailVip();
-});
-
-
 
 
 
@@ -228,18 +194,6 @@ if(valida==false){
 		return false;
 	}
 
-
-if(vip==false){
-		alert("Tienes que tener un email vip para poder cabiar la contraseña");
-		return false;
-	}
-
-var expresionnombre = new RegExp(/\w+\s+\w+/)
-
-	if(expresionnombre.test($("#nombre").val())==false){
-			alert("Tienes que escribir al menos un Nombre y un Apellido");
-			return false;
-		}
 
 	if($("#password").val()!=$("#repassword").val()){
 				

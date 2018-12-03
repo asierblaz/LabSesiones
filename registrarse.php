@@ -83,13 +83,7 @@ include "ParametrosBD.php";
 	$dir=$dir."/".$imagen;
 	move_uploaded_file($archivo, $dir);
 
-	
 
-
-?>
-
-
-<?php  
 
 	//sentencia sql
 

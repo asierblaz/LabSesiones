@@ -80,7 +80,6 @@ $conexion=mysqli_connect($servidor,$usuario,$password,$basededatos) or die
 	$emailingresado= $_POST['email'];
 	$passwordingresado=$_POST['password'];
 
-//$consulta= "SELECT * FROM usuarios WHERE email='$emailingresado' and password='$passwordingresado'";
 $consulta= "SELECT password FROM usuarios WHERE email='$emailingresado'";
 			
 
